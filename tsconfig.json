@@ -1,0 +1,42 @@
+// https://aka.ms/tsconfig
+{
+  // 编辑器配置
+  "compilerOptions": {
+    // 根目录
+    "rootDir": ".",
+    // 严格模式
+    "strict": true,
+    // 指定类型脚本如何从给定的模块说明符查找
+    "moduleResolution": "node",
+    "esModuleInterop": true, 
+    // JS语言版本
+    "target": "ES5",
+    // 允许未读取的局部变量
+    "noUnusedLocals": false,
+    // 允许未读取的参数
+    "noUnusedParameters": false,
+    // 允许解析JSON
+    "resolveJsonModule": true,
+    // 支持语法迭代
+    "downlevelIteration": true,
+    // 允许使用隐式的any类型（有助于简化ts的复杂度，从而更加专注于逻辑本身）
+    "noImplicitAny": false,
+    // 模块化
+    "module": "ESNext",
+    // 转换为JS时从TS文件中删除所有注释
+    "removeComments": false,
+    // 禁用sourcemap
+    "sourceMap": false,
+    "lib": ["ESNext", "DOM"],
+    // 路径映射，快捷导入
+    "baseUrl": ".",
+    "paths": {
+      "@vue/*": ["packages/*/src"]
+    }
+  },
+  // 入口
+  "include": [
+    // 匹配packages文件夹内任意文件夹下的src文件夹的index.ts     "packages/*/src/index.ts"
+    "packages/*/src"
+  ]
+}
