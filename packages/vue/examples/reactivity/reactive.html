@@ -1,0 +1,38 @@
+<!--
+ * @Author: Wanko
+ * @Date: 2023-05-22 10:55:03
+ * @LastEditors: Wanko
+ * @LastEditTime: 2023-05-22 17:04:06
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="../../dist/vue.js"></script>
+</head>
+
+<body>
+  <div id="app"></div>
+</body>
+<script>
+  const { reactive, effect } = Vue
+  console.log(reactive)
+
+  const obj = reactive({
+    name: '万人迷'
+  })
+
+  effect(() => {
+    document.querySelector('#app').innerText = obj.name
+  })
+  setTimeout(() => {
+    obj.name = '风度'
+  }, 1000)
+</script>
+
+</html>

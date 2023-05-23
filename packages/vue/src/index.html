@@ -1,0 +1,45 @@
+<!--
+ * @Author: Wanko
+ * @Date: 2023-05-20 17:17:49
+ * @LastEditors: Wanko
+ * @LastEditTime: 2023-05-22 10:13:55
+ * @Description: 
+-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  const p1 = {
+    firstName: '风度',
+    lastName: '万人迷',
+    get fullName () {
+      console.log('触发target的get')
+      return this.firstName + this.lastName
+    }
+  }
+
+  const proxy = new Proxy(p1, {
+    get (target, key, reciver) {
+      console.log('触发proxy的get行为')
+      // 以这种方式调用，只会触发一次get行为，也就是只触发了代理对象的get,但this.firstName + this.lastName其实也应该触发两次get，因为访问了firstName，lastName，proxy应该也监听到他们的变化，但是因为this指向的是原对象，所以监听不到。
+      // return target[key]
+      // 通过reciver，将key的this从target上转到了proxy上
+      return Reflect.get(target, key, reciver)
+
+    }
+  })
+  console.log(proxy.fullName)
+
+</script>
+
+</html>
