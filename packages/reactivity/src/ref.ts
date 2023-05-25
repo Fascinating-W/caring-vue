@@ -2,7 +2,7 @@
  * @Author: Wanko
  * @Date: 2023-05-22 19:07:40
  * @LastEditors: Wanko
- * @LastEditTime: 2023-05-22 19:53:11
+ * @LastEditTime: 2023-05-25 19:00:58
  * @Description:
  */
 import { hasChanged } from '@vue/shared'
@@ -25,6 +25,11 @@ function createRef(rawValue: unknown, shallow: boolean) {
   return new RefImpl(rawValue, shallow)
 }
 
+/**
+ * @Description: 判断是一个ref响应式对象
+ * @param {any} r
+ * @return {*}
+ */
 export function isRef(r: any): r is Ref {
   // 转为boolean值
   return !!(r && r.__v_isRef === true)

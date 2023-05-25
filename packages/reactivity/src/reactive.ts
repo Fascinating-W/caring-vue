@@ -2,7 +2,7 @@
  * @Author: Wanko
  * @Date: 2023-05-22 10:41:29
  * @LastEditors: Wanko
- * @LastEditTime: 2023-05-22 19:45:35
+ * @LastEditTime: 2023-05-25 19:05:26
  * @Description:
  */
 import { isObject } from '@vue/shared'
@@ -14,6 +14,10 @@ import { mutableHandlers } from './baseHandlers'
  */
 export const reactiveMap = new WeakMap<object, any>()
 
+export const enum ReactiveFlags {
+  IS_REACTIVE = '__v_isReactive'
+}
+
 /**
  * @Description: 为复杂数据类型，创建响应性对象
  * @param {object} target 被代理对象
@@ -24,7 +28,7 @@ export function reactive(target: object) {
 }
 
 /**
- * @Description: 创建响应式对象
+ * @Description: 创建响应式reactive对象
  * @param {object} target 被代理对象
  * @param {ProxyHandler} baseHandlers proxy的第二个参数
  * @param {WeakMap} proxyMap 缓存proxy实例的map
@@ -42,7 +46,8 @@ function createReactiveObject(
   }
 
   const proxy = new Proxy(target, baseHandlers)
-
+  // 添加一个reactive的标记
+  proxy[ReactiveFlags.IS_REACTIVE] = true
   proxyMap.set(target, proxy)
 
   return proxy
@@ -55,4 +60,14 @@ function createReactiveObject(
  */
 export const toReactive = <T extends unknown>(value: T): T => {
   return isObject(value) ? reactive(value as object) : value
+}
+
+/**
+ * @Description: 判断是一个ref响应式对象
+ * @param {any} r
+ * @return {*}
+ */
+export function isReactive(value: any): boolean {
+  // 转为boolean值
+  return !!(value && value[ReactiveFlags.IS_REACTIVE])
 }
